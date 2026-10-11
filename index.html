@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="ကိုယ်ပိုင်ဝင်ငွေ၊ ထွက်ငွေနှင့် စုငွေ စီမံခန့်ခွဲမှု">
+<link rel="manifest" href="manifest.json">
+<title>ကိုယ်ပိုင်ငွေစာရင်း</title>
+<style>
+:root{--bg:#101827;--panel:#182235;--panel2:#202d43;--text:#f4f7fb;--muted:#aab6c8;--line:#2c3a50;--accent:#6ee7b7;--red:#ff8d9a;--blue:#8db8ff;--shadow:0 10px 28px #0002}
+[data-theme="light"]{--bg:#f3f6fb;--panel:#fff;--panel2:#edf2f8;--text:#172033;--muted:#657187;--line:#dce4ef;--accent:#087f5b;--red:#c92a3a;--blue:#245fba;--shadow:0 8px 22px #21304712}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Myanmar",sans-serif}
+.app{max-width:760px;margin:auto;padding:18px 15px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 0 20px}.brand{font-size:21px;font-weight:800;letter-spacing:.1px}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:var(--accent);color:#06271d}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.danger{background:transparent;color:var(--red);border:1px solid var(--line)}button.small{padding:7px 10px;font-size:12px}
+.hero{background:linear-gradient(135deg,#174e48,#1d3558);border-radius:22px;padding:21px;color:#fff;box-shadow:var(--shadow)}.hero .label{font-size:13px;color:#d3f6e9}.balance{font-size:clamp(28px,7vw,39px);font-weight:850;margin:7px 0 18px;overflow-wrap:anywhere}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:#ffffff15;border:1px solid #ffffff20;padding:12px;border-radius:14px}.metric .label{font-size:12px}.metric .num{font-size:17px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}.positive{color:var(--accent)}.negative{color:var(--red)}
+.tabs{display:flex;gap:8px;overflow:auto;margin:18px 0}.tab{white-space:nowrap;background:var(--panel);border:1px solid var(--line);color:var(--muted)}.tab.active{background:var(--accent);color:#06271d;border-color:transparent}
+.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;box-shadow:var(--shadow)}h2{font-size:17px;margin:0 0 14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px;min-width:0}input[type=date]{color-scheme:dark}[data-theme="light"] input[type=date]{color-scheme:light}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.list{display:flex;flex-direction:column;gap:9px}.tx{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px}.dot{width:10px;height:10px;border-radius:50%;flex:none}.txmain{flex:1;min-width:0}.txname{font-weight:700;overflow-wrap:anywhere}.txmeta{font-size:11px;color:var(--muted);margin-top:3px}.txamount{font-weight:800;text-align:right;white-space:nowrap}.txbuttons{display:flex;gap:5px;margin-top:5px;justify-content:flex-end}.empty{color:var(--muted);text-align:center;padding:22px 8px;font-size:13px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.hidden{display:none!important}.hint{font-size:12px;color:var(--muted);line-height:1.65}.reportrow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.reportrow:last-child{border:0}.bar{height:8px;border-radius:20px;background:var(--panel2);overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;background:var(--accent)}.bottomnote{font-size:11px;color:var(--muted);text-align:center;margin:20px 0}
+@media(max-width:420px){.app{padding-left:11px;padding-right:11px}.section{padding:13px}.formgrid{grid-template-columns:1fr 1fr}.tx{padding:10px}.txamount{font-size:13px}.brand{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<header class="top"><div><div class="brand">💰 ကိုယ်ပိုင်ငွေစာရင်း</div><div class="sub">ဝင်ငွေ · ထွက်ငွေ · စုငွေ</div></div><button id="themeBtn" class="secondary small" type="button">☀️ Light</button></header>
+<section class="hero">
+<div class="label">လက်ရှိစာရင်းအရ လက်ကျန်ငွေ</div><div class="balance" id="balance">0 ကျပ်</div>
+<div class="metrics">
+<div class="metric"><div class="label">ဒီလ ဝင်ငွေ</div><div class="num" id="monthIncome">0 ကျပ်</div></div>
+<div class="metric"><div class="label">ဒီလ ထွက်ငွေ</div><div class="num" id="monthExpense">0 ကျပ်</div></div>
+<div class="metric"><div class="label">ဒီလ စုငွေသို့ လွှဲထား</div><div class="num" id="monthSave">0 ကျပ်</div></div>
+<div class="metric"><div class="label">ဒီလ အသားတင်</div><div class="num" id="monthNet">0 ကျပ်</div></div>
+</div></section>
+<nav class="tabs">
+<button class="tab active" data-tab="add">＋ စာရင်းသွင်း</button>
+<button class="tab" data-tab="history">စာရင်းမှတ်တမ်း</button>
+<button class="tab" data-tab="report">ခွဲခြမ်းစိတ်ဖြာမှု</button>
+<button class="tab" data-tab="backup">Backup / Restore</button>
+</nav>
+<section class="section" id="addPanel">
+<h2 id="formTitle">စာရင်းအသစ်ထည့်ရန်</h2>
+<form id="txForm">
+<div class="formgrid">
+<div class="field"><label for="type">စာရင်းအမျိုးအစား</label><select id="type"><option value="income">ဝင်ငွေ</option><option value="expense">ထွက်ငွေ</option><option value="saving">စုငွေသို့ လွှဲခြင်း</option><option value="withdraw">စုငွေမှ ပြန်ထုတ်ခြင်း</option></select></div>
+<div class="field"><label for="amount">ပမာဏ (ကျပ်)</label><input id="amount" type="number" min="1" step="1" required placeholder="ဥပမာ 15000"></div>
+<div class="field"><label for="date">ရက်စွဲ</label><input id="date" type="date" required></div>
+<div class="field"><label for="category">အမျိုးအစားခွဲ</label><select id="category"></select></div>
+<div class="field full"><label for="note">မှတ်ချက် (မဖြစ်မနေမဟုတ်)</label><input id="note" maxlength="120" placeholder="ဥပမာ - Freelance အလုပ်ခ"></div>
+</div><div class="actions"><button id="saveBtn" type="submit">စာရင်းသိမ်းမယ်</button><button id="cancelEdit" class="secondary hidden" type="button">မပြင်တော့ဘူး</button></div>
+</form>
+<p class="hint">မှတ်ချက် — “စုငွေသို့ လွှဲခြင်း” ကို သုံးငွေအဖြစ် မတွက်ဘဲ လက်ရှိသုံးနိုင်ငွေမှ စုငွေထဲသို့ ရွှေ့ထားခြင်းအဖြစ် တွက်ထားပါတယ်။</p>
+</section>
+<section class="section hidden" id="historyPanel"><h2>စာရင်းမှတ်တမ်း</h2>
+<div class="filters"><div class="field"><label for="filterType">အမျိုးအစား</label><select id="filterType"><option value="all">အားလုံး</option><option value="income">ဝင်ငွေ</option><option value="expense">ထွက်ငွေ</option><option value="saving">စုငွေသို့ လွှဲ</option><option value="withdraw">စုငွေမှ ပြန်ထုတ်</option></select></div><div class="field"><label for="filterMonth">လအလိုက်</label><input id="filterMonth" type="month"></div></div>
+<div class="list" id="txList"></div></section>
+<section class="section hidden" id="reportPanel"><h2>ခွဲခြမ်းစိတ်ဖြာမှု</h2><div class="field"><label for="reportMonth">ကြည့်လိုသည့်လ</label><input id="reportMonth" type="month"></div><div id="reportContent" style="margin-top:12px"></div></section>
+<section class="section hidden" id="backupPanel"><h2>ဒေတာ Backup / Restore</h2><p class="hint">Backup ဖိုင်ကို ဖုန်းထဲက လုံခြုံတဲ့နေရာတစ်ခုမှာ သိမ်းထားပါ။ ဖုန်းပျောက်ခြင်း၊ Browser ဒေတာဖျက်မိခြင်းတို့အတွက် ဒီဖိုင်က အရေးကြီးပါတယ်။ Restore လုပ်ရာတွင် လက်ရှိစာရင်းများကို Backup ဖိုင်ရှိစာရင်းများဖြင့် အစားထိုးမည်ဖြစ်သည်။</p><div class="actions"><button id="exportBtn" type="button">⬇ Backup ဖိုင်ထုတ်မယ်</button><button id="importBtn" type="button" class="secondary">⬆ Backup ပြန်ထည့်မယ်</button><input id="importFile" type="file" accept=".json,application/json" class="hidden"></div><div class="actions"><button id="clearBtn" type="button" class="danger">စာရင်းအားလုံးဖျက်မယ်</button></div><p class="hint" id="backupStatus"></p></section>
+<p class="bottomnote">ဒီဗားရှင်းက စမ်းသပ်ရန် Prototype ဖြစ်ပါတယ်။ ကိုယ်ပိုင်အချက်အလက်များကို Backup လုပ်ထားပါ။</p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const categories={
+ income:["လစာ","Freelance / အလုပ်ခ","လုပ်ငန်းဝင်ငွေ","လက်ဆောင်","အခြားဝင်ငွေ"],
+ expense:["အစားအသောက်","သွားလာရေး","အိမ်အသုံးစရိတ်","ဖုန်း / အင်တာနက်","ပညာရေး","ကျန်းမာရေး","ဝယ်ယူမှု","အပန်းဖြေ","အခြားထွက်ငွေ"],
+ saving:["အရေးပေါ်စုငွေ","ရည်မှန်းချက်စုငွေ","ပုံမှန်စုငွေ","အခြားစုငွေ"],
+ withdraw:["စုငွေမှ ပြန်ထုတ်"]
+};
+let txs=[], editingId=null;
+const today=()=>new Date().toLocaleDateString('en-CA');
+const monthNow=()=>today().slice(0,7);
+const money=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n||0))+" ကျပ်";
+const labels={income:"ဝင်ငွေ",expense:"ထွက်ငွေ",saving:"စုငွေသို့ လွှဲ",withdraw:"စုငွေမှ ပြန်ထုတ်"};
+const colors={income:"var(--accent)",expense:"var(--red)",saving:"var(--blue)",withdraw:"var(--blue)"};
+function load(){try{txs=JSON.parse(localStorage.getItem("kyatwise_transactions")||"[]");if(!Array.isArray(txs))txs=[];}catch{txs=[];}}
+function persist(){localStorage.setItem("kyatwise_transactions",JSON.stringify(txs));}
+function populateCategories(selected){const type=$("type").value; $("category").innerHTML=categories[type].map(c=>`<option>${esc(c)}</option>`).join("");if(selected&&categories[type].includes(selected))$("category").value=selected;}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function amountFor(t){return Number(t.amount)||0}
+function signedCashBalance(){return txs.reduce((sum,t)=>sum+({income:1,expense:-1,saving:-1,withdraw:1}[t.type]||0)*amountFor(t),0)}
+function savingBalance(){return txs.reduce((sum,t)=>sum+({saving:1,withdraw:-1}[t.type]||0)*amountFor(t),0)}
+function renderSummary(){
+ const m=monthNow(), cur=txs.filter(t=>t.date&&t.date.slice(0,7)===m);
+ const sumType=type=>cur.filter(t=>t.type===type).reduce((s,t)=>s+amountFor(t),0);
+ $("balance").textContent=money(signedCashBalance()+savingBalance());
+ $("monthIncome").textContent=money(sumType("income"));
+ $("monthExpense").textContent=money(sumType("expense"));
+ $("monthSave").textContent=money(sumType("saving")-sumType("withdraw"));
+ $("monthNet").textContent=money(sumType("income")-sumType("expense"));
+}
+function renderHistory(){
+ const type=$("filterType").value, month=$("filterMonth").value;
+ let rows=txs.filter(t=>(type==="all"||t.type===type)&&(!month||t.date.startsWith(month))).sort((a,b)=>b.date.localeCompare(a.date)||b.createdAt-a.createdAt);
+ $("txList").innerHTML=rows.length?rows.map(t=>`<div class="tx"><span class="dot" style="background:${colors[t.type]}"></span><div class="txmain"><div class="txname">${esc(t.note||t.category)}</div><div class="txmeta">${esc(t.date)} · ${esc(labels[t.type])} · ${esc(t.category)}</div></div><div><div class="txamount ${t.type==='income'||t.type==='withdraw'?'positive':'negative'}">${t.type==='income'||t.type==='withdraw'?'+':'−'}${money(amountFor(t))}</div><div class="txbuttons"><button class="secondary small" data-edit="${t.id}">ပြင်</button><button class="danger small" data-delete="${t.id}">ဖျက်</button></div></div></div>`).join(""):'<div class="empty">စာရင်းမရှိသေးပါ။ “စာရင်းသွင်း” မှာ စတင်ထည့်နိုင်ပါတယ်။</div>';
+}
+function renderReport(){
+ const m=$("reportMonth").value||monthNow(), rows=txs.filter(t=>t.date.startsWith(m));
+ const total=type=>rows.filter(t=>t.type===type).reduce((s,t)=>s+amountFor(t),0);
+ const inc=total("income"), exp=total("expense"), sav=total("saving")-total("withdraw");
+ const byCat={}; rows.filter(t=>t.type==="expense").forEach(t=>byCat[t.category]=(byCat[t.category]||0)+amountFor(t));
+ const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+ $("reportContent").innerHTML=`<div class="reportrow"><span>ဝင်ငွေစုစုပေါင်း</span><strong class="positive">${money(inc)}</strong></div><div class="reportrow"><span>ထွက်ငွေစုစုပေါင်း</span><strong class="negative">${money(exp)}</strong></div><div class="reportrow"><span>အသားတင် (ဝင်ငွေ − ထွက်ငွေ)</span><strong>${money(inc-exp)}</strong></div><div class="reportrow"><span>စုငွေထဲသို့ အသားတင်လွှဲထားမှု</span><strong>${money(sav)}</strong></div><h2 style="margin-top:18px">ထွက်ငွေအမျိုးအစားအလိုက်</h2>${cats.length?cats.map(([name,val])=>`<div style="padding:8px 0"><div class="reportrow"><span>${esc(name)}</span><strong>${money(val)}</strong></div><div class="bar"><span style="width:${exp?Math.min(100,val/exp*100):0}%"></span></div></div>`).join(""):'<div class="empty">ဒီလအတွက် ထွက်ငွေစာရင်းမရှိသေးပါ။</div>'}`;
+}
+function render(){renderSummary();renderHistory();renderReport();}
+function resetForm(){editingId=null;$("txForm").reset();$("date").value=today();$("formTitle").textContent="စာရင်းအသစ်ထည့်ရန်";$("saveBtn").textContent="စာရင်းသိမ်းမယ်";$("cancelEdit").classList.add("hidden");populateCategories();}
+$("type").addEventListener("change",()=>populateCategories());
+$("txForm").addEventListener("submit",e=>{
+ e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0){alert("ပမာဏကို 0 ထက်ကြီးအောင် ထည့်ပါ။");return;}
+ const record={id:editingId||crypto.randomUUID(),type:$("type").value,amount, date:$("date").value,category:$("category").value,note:$("note").value.trim(),createdAt:editingId?(txs.find(t=>t.id===editingId)?.createdAt||Date.now()):Date.now()};
+ if(!record.date){alert("ရက်စွဲရွေးပါ။");return;}
+ if(editingId)txs=txs.map(t=>t.id===editingId?record:t);else txs.push(record);
+ persist();resetForm();render();switchTab("history");
+});
+$("cancelEdit").addEventListener("click",resetForm);
+$("txList").addEventListener("click",e=>{
+ const edit=e.target.closest("[data-edit]")?.dataset.edit, del=e.target.closest("[data-delete]")?.dataset.delete;
+ if(edit){const t=txs.find(x=>x.id===edit);if(!t)return;editingId=t.id;$("type").value=t.type;populateCategories(t.category);$("amount").value=t.amount;$("date").value=t.date;$("category").value=t.category;$("note").value=t.note||"";$("formTitle").textContent="စာရင်းပြင်ဆင်ရန်";$("saveBtn").textContent="ပြင်ဆင်ချက်သိမ်းမယ်";$("cancelEdit").classList.remove("hidden");switchTab("add");window.scrollTo({top:0,behavior:"smooth"});}
+ if(del){const t=txs.find(x=>x.id===del);if(t&&confirm(`"${t.note||t.category}" စာရင်းကို ဖျက်မှာ သေချာပါသလား။`)){txs=txs.filter(x=>x.id!==del);persist();render();}}
+});
+$("filterType").addEventListener("change",renderHistory);$("filterMonth").addEventListener("change",renderHistory);$("reportMonth").value=monthNow();$("reportMonth").addEventListener("change",renderReport);
+function switchTab(tab){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));["add","history","report","backup"].forEach(k=>$(k+"Panel").classList.toggle("hidden",k!==tab+"Panel"));}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+function setTheme(theme){document.documentElement.dataset.theme=theme;localStorage.setItem("kyatwise_theme",theme);$("themeBtn").textContent=theme==="dark"?"☀️ Light":"🌙 Dark";document.querySelector('meta[name="theme-color"]').content=theme==="dark"?"#101827":"#f3f6fb";}
+$("themeBtn").addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+$("exportBtn").addEventListener("click",()=>{const data={app:"KyatWise",version:1,exportedAt:new Date().toISOString(),transactions:txs};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kyatwise-backup-"+today()+".json";a.click();URL.revokeObjectURL(a.href);$("backupStatus").textContent="Backup ဖိုင်ထုတ်ယူရန် စတင်လိုက်ပါပြီ။ ဖိုင်ကို သိမ်းထားပါ။";});
+$("importBtn").addEventListener("click",()=>$("importFile").click());
+$("importFile").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const arr=Array.isArray(parsed)?parsed:parsed.transactions;if(!Array.isArray(arr)||arr.some(t=>!t.id||!categories[t.type]||!Number.isFinite(Number(t.amount))||!t.date))throw new Error("invalid");if(!confirm("လက်ရှိစာရင်းများကို Backup ဖိုင်ရှိစာရင်းများဖြင့် အစားထိုးမည်။ ဆက်လုပ်မလား။"))return;txs=arr;persist();render();$("backupStatus").textContent="Backup ပြန်ထည့်ပြီးပါပြီ။";}catch{alert("ဒီ Backup ဖိုင်ကို ဖတ်မရပါ။ မှန်ကန်တဲ့ JSON Backup ဖိုင်ကို ရွေးပါ။");}finally{$("importFile").value="";}});
+$("clearBtn").addEventListener("click",()=>{if(confirm("သတိပေးချက် — စာရင်းအားလုံးကို ဖျက်မှာ သေချာပါသလား။ Backup မလုပ်ရသေးရင် အရင် Backup လုပ်ပါ။")&&confirm("နောက်ဆုံးအတည်ပြုချက် — အားလုံးဖျက်မလား။")){txs=[];persist();render();$("backupStatus").textContent="စာရင်းများအားလုံး ဖျက်ပြီးပါပြီ။";}});
+load();setTheme(localStorage.getItem("kyatwise_theme")||"dark");$("date").value=today();populateCategories();render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body>
+</html>

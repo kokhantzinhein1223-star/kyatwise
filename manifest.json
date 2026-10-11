@@ -1,0 +1,11 @@
+{
+  "name": "ကိုယ်ပိုင်ငွေစာရင်း",
+  "short_name": "ငွေစာရင်း",
+  "description": "ကိုယ်ပိုင်ဝင်ငွေ၊ ထွက်ငွေနှင့် စုငွေ စီမံခန့်ခွဲမှု",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": []
+}
